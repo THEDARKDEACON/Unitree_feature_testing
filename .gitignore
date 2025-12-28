@@ -1,3 +1,14 @@
 .vscode/settings.json
 .vscode/c_cpp_properties.json
 *.pyc
+
+# RL Artifacts
+h1_checkpoints/
+h1_tensorboard/
+*.zip
+MUJOCO_LOG.TXT
+
+# ROS 2 Build Artifacts
+build/
+install/
+log/

@@ -1,0 +1,4 @@
+<mujoco>
+  <compiler angle="radian"/>
+  <include file="h1.urdf"/>
+</mujoco>

@@ -25,7 +25,7 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the URDF instead of SDF, since the robot state publisher works better with URDF
-    urdf_file = os.path.join(pkg_project_description, 'models/h1_ign', 'h1_2_handless.urdf')
+    urdf_file = os.path.join(pkg_project_description, 'models/h1_ign', 'h1_2.urdf')
     with open(urdf_file, 'r') as infp:
         urdf_description = infp.read()
 
@@ -74,6 +74,14 @@ def generate_launch_description():
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
+    # Static transform from world to pelvis (temporary fix for missing dynamic TF)
+    static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_transform_publisher',
+        arguments=['0', '0', '1.04', '0', '0', '0', 'world', 'pelvis']
+    )
+
     return LaunchDescription([
         set_gpu_env,
         set_glx_env,
@@ -82,5 +90,6 @@ def generate_launch_description():
                               description='Open RViz.'), 
         bridge,
         robot_state_publisher,
+        static_tf,
         rviz
     ])
